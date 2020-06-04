@@ -1,1 +1,1 @@
-process.sdtout.write('docker ps')
+process.stdout.write('docker ps')
