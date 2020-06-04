@@ -1,7 +1,7 @@
-FROM node:12
+FROM node:14-alpine
 WORKDIR /app
-COPY main.js package-lock.json package.json ./
-
+COPY package.json package-lock.json ./
 RUN npm ci
-
-CMD ["npm", "start"]
+COPY main.js ./
+EXPOSE 3001
+ENTRYPOINT [ "npm", "start" ]
