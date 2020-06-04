@@ -25,7 +25,7 @@ spec:
           - name: SERVER_PORT
             value: '3000'
           - name: DB_CONNECTION_URI
-            value: 'postgres://postgres@postgres-service.postgres-0:5432/postgres'
+            value: 'postgres://postgres@postgres-0.postgres-service:5432/postgres'
 ---
 apiVersion: v1
 kind: Service
