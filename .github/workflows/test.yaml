@@ -10,7 +10,6 @@ jobs:
     if: github.event.comment.body == 'test'
     
     steps:
-      - name: Hello world
-        run: echo Hello world, I was run on demand by ${GITHUB_ACTOR}
+      - uses: actions/checkout@v2
       - name: private-action
         uses: ./github/actions
