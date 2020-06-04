@@ -39,4 +39,5 @@ jobs:
           kubectl config set-context admin-context --cluster=cluster --user=admin
           kubectl config use-context admin-context
           kubectl apply -f ./k8s/
+          kubectl rollout restart deployment onboarding
     
