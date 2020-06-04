@@ -2,7 +2,7 @@ name: Test
 
 on:
   issue_comment:
-    types: [edited]
+    types: [created, edited]
 
 jobs:
   test:
