@@ -1,2 +1,2 @@
 
-process.stdout.write('touch hello-world-test'+ require(os).EOL)
+process.stdout.write('touch hello-world-test'+ require('os').EOL)
