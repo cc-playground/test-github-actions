@@ -18,8 +18,9 @@ spec:
       imagePullSecrets:
         - name: some-image-pull-secret
       containers:
-      - image: registry.ingress.oba.d052927.shoot.canary.k8s-hana.ondemand.com/marco-onboarding
+      - image: registry.ingress.oba.d052927.shoot.canary.k8s-hana.ondemand.com/onboarding:latest
         name: onboarding
+        imagePullPolicy: Always
         resources: {}
 status: {}
 ---
