@@ -20,7 +20,7 @@ jobs:
     # Runs a single command using the runners shell
     - name: Run a one-line script
       env: 
-        secret: ${{secrets.MY_SECRET}}
+        SECRET: ${{secrets.MY_SECRET}}
       run: |
         env
         echo $SECRET
