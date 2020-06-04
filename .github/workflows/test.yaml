@@ -11,14 +11,11 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
-        
-      - name: private-action
-        uses: cc-playground/docker-login-action@master
+      
+      - uses: azure/setup-kubectl@v1
         with:
-          username: participant
-          password: ${{ secrets.REGISTRY_SECRET }}
-          login-server: registry.ingress.oba.d052927.shoot.canary.k8s-hana.ondemand.com
+            version: 'stable' # default is latest stable
+      
       - name: test
         run: |
-          echo test-step
-          ls
+          kubectl config view
