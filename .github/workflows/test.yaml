@@ -14,6 +14,10 @@ jobs:
         
       - name: private-action
         uses: cc-playground/docker-login-action@master
+        with:
+          username: participant
+          password: ${{ secrets.REGISTRY_SECRET }}
+          login-server: registry.ingress.oba.d052927.shoot.canary.k8s-hana.ondemand.com
       - name: test
         run: |
           echo test-step
