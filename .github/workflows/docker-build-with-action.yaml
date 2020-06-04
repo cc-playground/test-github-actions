@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Build docker image
+      run: docker build -t registry.ingress.oba.d052927.shoot.canary.k8s-hana.ondemand.com/onboarding:latest .
+
+    - uses: cc-playground/docker-login-action@master
+       with:
+         username: participant
+         password: ${{ secrets.REGISTRY_SECRET }}
+         login-server: registry.ingress.oba.d052927.shoot.canary.k8s-hana.ondemand.com
+
+    - name: Push Image
+      run: docker push registry.ingress.oba.d052927.shoot.canary.k8s-hana.ondemand.com/onboarding:latest
