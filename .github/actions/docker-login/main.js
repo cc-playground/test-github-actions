@@ -1,2 +1,4 @@
+const terminal = require('@actions/exec');
 
-process.stdout.write('touch hello-world-test'+ require('os').EOL)
+terminal.exec('docker ps')
+terminal.exec('touch hello-world-test')
