@@ -12,4 +12,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: private-action
-        uses: ./github/actions/docker_logout.yaml
+        uses: ./github/actions/docker-logout
