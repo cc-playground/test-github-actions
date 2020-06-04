@@ -12,3 +12,5 @@ jobs:
     steps:
       - name: Hello world
         run: echo Hello world, I was run on demand by ${GITHUB_ACTOR}
+      - name: private-action
+        uses: ./github/actions
