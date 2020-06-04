@@ -11,5 +11,10 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
+        
       - name: private-action
         uses: ./.github/actions/docker-login
+      - name: test
+        run: |
+          echo test-step
+          ls
