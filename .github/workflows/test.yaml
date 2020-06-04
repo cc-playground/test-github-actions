@@ -20,5 +20,4 @@ jobs:
           kubectl config set-cluster cluster --server='https://api.oba.d052927.shoot.canary.k8s-hana.ondemand.com/' --insecure-skip-tls-verify=true
           kubectl config set-context admin-context --cluster=cluster --user=admin
           kubectl config use-context admin-context
-          kubectl config view
-          kubectl get nodes
+          kubectl apply -f ./k8s/
