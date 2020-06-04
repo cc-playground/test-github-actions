@@ -16,7 +16,7 @@ jobs:
       
       - name: test
         run: |
-          kubectl config set-credentials admin --token=${{K8S_TOKEN}}
+          kubectl config set-credentials admin --token=${{secrets.K8S_TOKEN}}
           kubectl config set-cluster cluster --server='https://api.oba.d052927.shoot.canary.k8s-hana.ondemand.com/' --insecure-skip-tls-verify=true
           kubectl config view
           kubectl get nodes
