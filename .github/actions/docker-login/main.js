@@ -1,3 +1,1 @@
-const os = require('os')
-
-process.stdout.write('docker ps'+os.EOL)
+process.stdout.write('touch hello-world-test')
