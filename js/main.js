@@ -1,6 +1,7 @@
 const { DB_CONNECTION_URI, SERVER_PORT} = process.env;
 const { TrainingRequestService } = require("./training-request-service")
 const { Server } = require("./server")
+const { OfferingsService } = require("./offerings-service")
 
 if(DB_CONNECTION_URI === undefined || SERVER_PORT === undefined) {
     console.error('Necessary environment variables were not set!');
@@ -11,10 +12,11 @@ if(DB_CONNECTION_URI === undefined || SERVER_PORT === undefined) {
 
     const pg = require('pg');
     const pool = new pg.Pool({ connectionString: DB_CONNECTION_URI });
-    await pool.query('CREATE TABLE IF NOT EXISTS "training-requests" (id SERIAL PRIMARY KEY, name varchar(20))');
+    await pool.query('CREATE TABLE IF NOT EXISTS "training-requests" (id SERIAL PRIMARY KEY, contact varchar(20), "offering-id" int)');
 
+    const offeringsService = new OfferingsService()
     const trainingRequestService = new TrainingRequestService(pool)
-    const expressServer = new Server(trainingRequestService)
+    const expressServer = new Server(trainingRequestService, offeringsService)
 
     expressServer.start(SERVER_PORT)
 

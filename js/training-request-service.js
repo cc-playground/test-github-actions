@@ -1,6 +1,6 @@
 const QueryStream = require('pg-query-stream');
 
-exports.TrainingRequestService = function (pool) {
+exports.TrainingRequestService = function (pool, offeringsService) {
     this.getAllStreamTo = async (writeableStream) => {
         pool.connect((err, client, release) => {
             if (err) {
@@ -13,7 +13,10 @@ exports.TrainingRequestService = function (pool) {
         });
     }
 
-    this.create = async (name) => {
-        await pool.query('INSERT INTO "training-requests" (name) values ($1)', [name]);
+    this.create = async (name, offeringId) => {
+        const query = 'INSERT INTO "training-requests" (name, "offering-id") values ($1, $2) RETURNING *';
+        const parameter = [name, offeringId];
+        const result = await pool.query(query, parameter);
+        return result.rows[0]
     } 
 }
