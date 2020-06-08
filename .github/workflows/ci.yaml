@@ -30,8 +30,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         
-      - uses: azure/setup-kubectl@v1
-        
       - name: deploy
         run: |
           kubectl config set-credentials admin --token=${{secrets.K8S_TOKEN}}
