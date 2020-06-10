@@ -1,31 +1,27 @@
 const express = require('express');
-const JSONStream = require('JSONStream');
 
-exports.Server = function (trainingRequestService, offeringsService) {
+exports.Server = function (trainingRequestRouter, offeringsRouter) {
 
+    const environment = process.env.NODE_ENV || 'production';
+    
     let httpServer
     const app = express();
     app.use(express.json());
 
-    app.get('/', async function (request, response) {
-        const jsonStream = JSONStream.stringify()
-        trainingRequestService.getAllStreamTo(jsonStream);
-        jsonStream.pipe(response)
+    app.use(function(req, res, next) {
+        if(environment === 'development') {
+            res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8081')
+        }
+        next();
     });
 
-    app.post('/', async function (request, response) {
-        const { contact, offeringName } = request.body
-        if ( contact == undefined) {
-            response.status(406).send(`Please provide a contact.`)
-        }
-        if (!offeringsService.existsByName(offeringName)){
-            response.status(406).send(`Offering "${offeringName}" does not exist.`)
-        }
-        const offering = offeringsService.getByName(offeringName)
-        const trainingRequest = await trainingRequestService.create(name, offering.id);
-        response.status(201).json(trainingRequest)
-    });
+    app.use('/api/v1/offerings', offeringsRouter.router);
+    app.use('/api/v1/requests', trainingRequestRouter.router);
     
+    this.setCORSHeader = () => {
+        
+    }
+
     this.start = (port) => {
         httpServer = app
             .listen(port, function () {

@@ -1,7 +1,9 @@
 const { DB_CONNECTION_URI, SERVER_PORT} = process.env;
 const { TrainingRequestService } = require("./training-request-service")
-const { Server } = require("./server")
 const { OfferingsService } = require("./offerings-service")
+const { Server } = require("./server")
+const { OfferingsRouter } = require('./offerings-router');
+const { TrainingRequestRouter } = require('./training-request-router');
 
 if(DB_CONNECTION_URI === undefined || SERVER_PORT === undefined) {
     console.error('Necessary environment variables were not set!');
@@ -16,7 +18,9 @@ if(DB_CONNECTION_URI === undefined || SERVER_PORT === undefined) {
 
     const offeringsService = new OfferingsService()
     const trainingRequestService = new TrainingRequestService(pool)
-    const expressServer = new Server(trainingRequestService, offeringsService)
+    const offeringsRouter = new OfferingsRouter(offeringsService)
+    const trainingRequestRouter = new TrainingRequestRouter(trainingRequestService, offeringsService)
+    const expressServer = new Server(trainingRequestRouter, offeringsRouter)
 
     expressServer.start(SERVER_PORT)
 
