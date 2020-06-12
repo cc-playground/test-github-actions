@@ -41,5 +41,6 @@ ul {
 li {
   display: inline-block;
   margin: 0 10px;
+  border: 0.3em solid green
 }
 </style>
