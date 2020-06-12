@@ -4,8 +4,9 @@
   "description": "Small WebApp to request trainings",
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha",
-    "build": "tsc",
+    "build-ts": "tsc",
     "build-ui": "node ui/node_modules/@vue/cli-service/bin/vue-cli-service.js build --dest ui/dist ui/src/main.js",
+    "build":"concurrently \"npm:build-ts\" \"npm:build-ui\"",
     "start": "node dist/main.js",
     "watch-ui": "node ui/node_modules/@vue/cli-service/bin/vue-cli-service.js build --watch --dest ui/dist ui/src/main.js",
     "watch-ts": "tsc -w",
