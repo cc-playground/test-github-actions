@@ -1,9 +1,11 @@
+import { Pool } from 'pg';
+import { TrainingRequestService } from "./training-request-service"
+import { OfferingsService } from "./offerings-service"
+import { Server } from "./server"
+import { OfferingsRouter } from './offerings-router'
+import { TrainingRequestRouter } from './training-request-router'
+
 const { DB_CONNECTION_URI, SERVER_PORT} = process.env;
-const { TrainingRequestService } = require("./training-request-service")
-const { OfferingsService } = require("./offerings-service")
-const { Server } = require("./server")
-const { OfferingsRouter } = require('./offerings-router');
-const { TrainingRequestRouter } = require('./training-request-router');
 
 if(DB_CONNECTION_URI === undefined || SERVER_PORT === undefined) {
     console.error('Necessary environment variables were not set!');
@@ -12,8 +14,7 @@ if(DB_CONNECTION_URI === undefined || SERVER_PORT === undefined) {
 
 (async function () {
 
-    const pg = require('pg');
-    const pool = new pg.Pool({ connectionString: DB_CONNECTION_URI });
+    const pool = new Pool({ connectionString: DB_CONNECTION_URI });
     await pool.query('CREATE TABLE IF NOT EXISTS "training-requests" (id SERIAL PRIMARY KEY, contact varchar(20), "offering-id" int)');
 
     const offeringsService = new OfferingsService()
@@ -22,7 +23,7 @@ if(DB_CONNECTION_URI === undefined || SERVER_PORT === undefined) {
     const trainingRequestRouter = new TrainingRequestRouter(trainingRequestService, offeringsService)
     const expressServer = new Server(trainingRequestRouter, offeringsRouter)
 
-    expressServer.start(SERVER_PORT)
+    expressServer.start(Number.parseInt(SERVER_PORT, 10))
 
     process.on('SIGTERM', async () => {
         console.log('SIGTERM signal received');

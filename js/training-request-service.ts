@@ -1,8 +1,13 @@
-const QueryStream = require('pg-query-stream');
+import QueryStream from 'pg-query-stream';
+import { Pool } from 'pg';
+import { Offering } from './offerings-service';
 
-exports.TrainingRequestService = function (pool, offeringsService) {
-    this.getAllStreamTo = async (writeableStream) => {
-        pool.connect((err, client, release) => {
+export class TrainingRequestService {
+
+    constructor(private pool: Pool){}
+
+    public getAllStreamTo(writeableStream: NodeJS.WritableStream): void {
+        this.pool.connect((err, client, release) => {
             if (err) {
               return console.error('Error acquiring client', err.stack)
             }
@@ -13,10 +18,10 @@ exports.TrainingRequestService = function (pool, offeringsService) {
         });
     }
 
-    this.create = async (name, offeringId) => {
+    public async create (name: string, offeringId: number): Promise<Offering> {
         const query = 'INSERT INTO "training-requests" (name, "offering-id") values ($1, $2) RETURNING *';
         const parameter = [name, offeringId];
-        const result = await pool.query(query, parameter);
+        const result = await this.pool.query(query, parameter);
         return result.rows[0]
     } 
 }
