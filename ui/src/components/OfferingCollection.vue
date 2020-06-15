@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     fetchOfferings: function() {
-      return axios.get('http://localhost:3001/api/v1/offerings').then(response => {
+      return axios.get('api/v1/offerings').then(response => {
         this.offerings = response.data
       });
     }
