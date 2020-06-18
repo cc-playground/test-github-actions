@@ -1,0 +1,14 @@
+local.environment
+README.md
+run-db.sh
+build-and-run-app.sh
+node_modules/
+.gitignore
+dist/
+.github/
+.git/
+
+ui/README.md
+ui/dist/
+ui/node_modules/
+ui/.gitignore

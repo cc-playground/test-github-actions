@@ -1,11 +1,10 @@
 import { TrainingRequestService } from "./training-request-service";
 import { OfferingsService } from "./offerings-service";
-import express, {Request, Response} from "express";
-import JSONStream from "JSONStream";
+import { Request, Response, Router } from "express";
 
 export class TrainingRequestRouter {
 
-    public router = express.Router()
+    public router = Router()
 
     constructor(
         trainingRequestService: TrainingRequestService,
@@ -13,7 +12,8 @@ export class TrainingRequestRouter {
     ) {
 
         this.router.get('/', async function (request: Request, response: Response) {
-            const jsonStream: NodeJS.ReadWriteStream = JSONStream.stringify()
+            // we deliberately abstain from typings here due to casing issues in the docker build
+            const jsonStream: NodeJS.ReadWriteStream = require('JSONStream').stringify()
             trainingRequestService.getAllStreamTo(jsonStream);
             jsonStream.pipe(response)
         });
