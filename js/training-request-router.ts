@@ -13,6 +13,7 @@ export class TrainingRequestRouter {
 
         this.router.get('/', async function (request: Request, response: Response) {
             // we deliberately abstain from typings here due to casing issues in the docker build
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const jsonStream: NodeJS.ReadWriteStream = require('JSONStream').stringify()
             trainingRequestService.getAllStreamTo(jsonStream);
             jsonStream.pipe(response)

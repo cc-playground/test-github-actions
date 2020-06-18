@@ -14,7 +14,7 @@ export class OfferingsService {
         }
     ]
 
-    public getAll() {
+    public getAll(): Offering[] {
         return this.offerings
     }
     

@@ -33,9 +33,28 @@
     "@types/express": "^4.17.6",
     "@types/node": "^14.0.13",
     "@types/pg-query-stream": "^1.0.3",
+    "@typescript-eslint/eslint-plugin": "^3.3.0",
+    "@typescript-eslint/parser": "^3.3.0",
     "concurrently": "^5.2.0",
+    "eslint": "^7.2.0",
     "mocha": "^7.2.0",
     "nodemon": "^2.0.4",
     "typescript": "^3.9.5"
+  },
+  "eslintConfig": {
+    "root": true,
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "env": {
+      "node": true
+    },
+    "parserOptions": {
+      "parser": "@typescript-eslint/parser"
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended"
+    ]
   }
 }

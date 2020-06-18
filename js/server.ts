@@ -27,11 +27,11 @@ export class Server {
             console.error(error.stack);
             process.exit(2);
         });
-    };
+    }
         
     public stop(): void {
         this.httpServer.close(() => {
             console.log('Server shut down');
         });
-    };
+    }
 }
