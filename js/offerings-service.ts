@@ -1,3 +1,6 @@
+import { Pool } from 'pg';
+import { Logger } from 'pino';
+
 export type Offering = {
     id: number,
     name: string,
@@ -5,6 +8,11 @@ export type Offering = {
 }
 
 export class OfferingsService {
+    private logger: Logger;
+
+    constructor(private pool: Pool, parentLogger: Logger){
+        this.logger = parentLogger.child({module: this.constructor.name});
+    }
 
     private offerings: Offering[]= [
         {   
@@ -15,6 +23,7 @@ export class OfferingsService {
     ]
 
     public getAll(): Offering[] {
+        this.logger.info(`querying all offerings`);
         return this.offerings
     }
     

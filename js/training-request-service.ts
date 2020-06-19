@@ -1,12 +1,19 @@
 import QueryStream from 'pg-query-stream';
 import { Pool } from 'pg';
 import { Offering } from './offerings-service';
+import pino, { Logger } from 'pino';
 
 export class TrainingRequestService {
 
-    constructor(private pool: Pool){}
+    private logger: Logger;
+
+    constructor(private pool: Pool, parentLogger: Logger){
+        this.logger = parentLogger.child({module: this.constructor.name});
+        this.logger.info('created child logger');
+    }
 
     public getAllStreamTo(writeableStream: NodeJS.WritableStream): void {
+        this.logger.info('querying database');
         this.pool.connect((err, client, release) => {
             if (err) {
               return console.error('Error acquiring client', err.stack)

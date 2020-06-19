@@ -7,6 +7,7 @@ export class OfferingsRouter {
 
     constructor(offeringsService: OfferingsService) {
         this.router.get('/', (request: Request, response: Response) => {
+            request.log.info('request on offerings');
             response.send(offeringsService.getAll());
         });
     }

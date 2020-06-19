@@ -4,6 +4,7 @@ import { OfferingsService } from "./offerings-service"
 import { Server } from "./server"
 import { OfferingsRouter } from './offerings-router'
 import { TrainingRequestRouter } from './training-request-router'
+import {default as pino} from 'pino';
 
 const { DB_CONNECTION_URI, SERVER_PORT} = process.env;
 
@@ -17,8 +18,11 @@ if(DB_CONNECTION_URI === undefined || SERVER_PORT === undefined) {
     const pool = new Pool({ connectionString: DB_CONNECTION_URI });
     await pool.query('CREATE TABLE IF NOT EXISTS "training-requests" (id SERIAL PRIMARY KEY, contact varchar(20), "offering-id" int)');
 
-    const offeringsService = new OfferingsService()
-    const trainingRequestService = new TrainingRequestService(pool)
+    const parentLogger = pino();
+    parentLogger.info(`Parent logger instance created`);
+
+    const offeringsService = new OfferingsService(pool, parentLogger)
+    const trainingRequestService = new TrainingRequestService(pool, parentLogger)
     const offeringsRouter = new OfferingsRouter(offeringsService)
     const trainingRequestRouter = new TrainingRequestRouter(trainingRequestService, offeringsService)
     const expressServer = new Server(trainingRequestRouter, offeringsRouter)

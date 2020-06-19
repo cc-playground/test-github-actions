@@ -15,10 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TrainingRequestService = void 0;
 const pg_query_stream_1 = __importDefault(require("pg-query-stream"));
 class TrainingRequestService {
-    constructor(pool) {
+    constructor(pool, parentLogger) {
         this.pool = pool;
+        this.logger = parentLogger.child({ module: this.constructor.name });
+        this.logger.info('created child logger');
     }
     getAllStreamTo(writeableStream) {
+        this.logger.info('querying database');
         this.pool.connect((err, client, release) => {
             if (err) {
                 return console.error('Error acquiring client', err.stack);

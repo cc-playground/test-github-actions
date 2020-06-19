@@ -9,6 +9,7 @@ class OfferingsRouter {
     constructor(offeringsService) {
         this.router = express_1.default.Router();
         this.router.get('/', (request, response) => {
+            request.log.info('request on offerings');
             response.send(offeringsService.getAll());
         });
     }

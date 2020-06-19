@@ -8,19 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TrainingRequestRouter = void 0;
-const express_1 = __importDefault(require("express"));
-const JSONStream_1 = __importDefault(require("JSONStream"));
+const express_1 = require("express");
 class TrainingRequestRouter {
     constructor(trainingRequestService, offeringsService) {
-        this.router = express_1.default.Router();
+        this.router = express_1.Router();
         this.router.get('/', function (request, response) {
             return __awaiter(this, void 0, void 0, function* () {
-                const jsonStream = JSONStream_1.default.stringify();
+                const jsonStream = require('JSONStream').stringify();
                 trainingRequestService.getAllStreamTo(jsonStream);
                 jsonStream.pipe(response);
             });
