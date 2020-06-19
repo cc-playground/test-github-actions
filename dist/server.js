@@ -6,16 +6,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Server = void 0;
 const express_1 = __importDefault(require("express"));
 class Server {
-    constructor(trainingRequestRouter, offeringsRouter) {
+    constructor(trainingRequestRouter, offeringsRouter, parentLogger) {
+        this.logger = parentLogger.child({ module: this.constructor.name });
+        this.logger.info('Construction of Server...');
         this.app = express_1.default();
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.static('ui/dist'));
         this.app.use('/api/v1/offerings', offeringsRouter.router);
         this.app.use('/api/v1/requests', trainingRequestRouter.router);
+        this.logger.info('Construction of Server successful');
+        this.logger.debug('I am a debug log');
     }
     start(port) {
-        this.httpServer = this.app.listen(port, function () {
-            console.log(`Server started on port ${port}`);
+        this.httpServer = this.app.listen(port, () => {
+            this.logger.info('Server started on port %d', port);
         })
             .on('connection', function (socket) {
             socket.setTimeout(5 * 1000);
@@ -26,12 +30,10 @@ class Server {
             process.exit(2);
         });
     }
-    ;
     stop() {
         this.httpServer.close(() => {
             console.log('Server shut down');
         });
     }
-    ;
 }
 exports.Server = Server;
